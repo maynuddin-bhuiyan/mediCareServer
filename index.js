@@ -46,6 +46,8 @@ async function runerw() {
         await client.connect();
         const database = client.db('medicare');
         const propertiesCollection = database.collection('properties');
+        const appointmentCollection = database.collection('appointment');
+     
         
      
 
@@ -77,6 +79,28 @@ async function runerw() {
 
 
         });
+
+
+        app.post('/appointment', async(req, res) => {
+            const appointment = req.body;
+            const orderreview =  await appointmentCollection.insertOne(appointment);
+            console.log(orderreview);
+            res.send(orderreview)
+        
+        });
+
+
+        
+
+
+
+        app.get('/appointment', async(req , res) => {
+            const cursor = appointmentCollection.find({});
+            const getAppointment = await cursor.toArray();
+            res.send(getAppointment);
+          
+          })
+
            
 
        
